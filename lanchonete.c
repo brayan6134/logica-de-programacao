@@ -9,7 +9,7 @@ int main()
 	int codigo = 0;
 	char escolha;
 	char escolha2;
-	
+
 	printf("Seja bem-vindo a nossa lanchonete\n");
 	printf("informe o seu nome\n");
 	scanf("%s",&nome);
@@ -27,6 +27,7 @@ int main()
 		if (codigo>4)
 		{
 		printf("esse produto nao existe\n");
+		break;
 		}
 		else if (codigo<4)
 		{
@@ -51,19 +52,19 @@ int main()
 				
 		printf("deseja outro produto S = sim ou N = nao\n");
 		scanf(" %c",&escolha);
-	}while(escolha != 'N');
+	}while(escolha == 'N');
 	printf("confirmar pedido?\n");
 	printf("S = sim ou N = nao\n");
 	scanf(" %c",&escolha2);
-	if(escolha2 != 'N')
+	if(escolha2 == 'S')
 	{
 	printf("o valor total dos produtos e %.2lf\n",result);
 	printf("pedido numero 01 de %s\n",nome);
 	}
-    else
+    else if(escolha2 == 'N')
 	{
 	printf("pedido cancelado\n");	
 	}
-	
+
 return(0);	
 }
