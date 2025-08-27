@@ -8,12 +8,18 @@ double divisao(double a,double b);
 double raiz(double a);
 int fatorial(int a);
 int fatorial2(int a);
+int mdc (int a,int b);
+int mmc(int a,int b);
+void equacao(double a, double b, double c); 
 int main() {
 	
 	int opcao = 0;
 	double result = 0.0;
 	double a = 0.0;
 	double b = 0.0;
+	double c = 0.0;
+	int a1 = 0;
+	int b1 = 0;
 	int fat = 0;
 	int result2 = 0;
 	int exp = 0;
@@ -104,11 +110,9 @@ int main() {
 					result = raiz(a);
 					printf("o resultado do calculo e: %.5lf\n",a,result);
 				}
-				
-
 			break;
 			case 6:
-			printf("insira o numero\n");
+			printf("informe o numero\n");
 			scanf("%d",&fat);
 			result2 = fatorial(fat);
 			printf("o resultado do calculo e: %d\n",result2);
@@ -119,8 +123,32 @@ int main() {
 			scanf("%d",&fat);
 			result2 = fatorial2(fat);
 			printf("o resultado do calculo e: %d\n",result2);
+			break;
+			case 8:
+			printf("Informe o primeiro numero inteiro:\n");
+			scanf("%d", &a1);
+			printf("Informe o segundo numero inteiro:\n");
+			scanf("%d", &b1);
+			result2 = mdc(a1,b1);
+			printf("O resultado do calculo e: %d\n", result2);
+			break;
+
+			case 9:
+			printf("Informe o primeiro numero inteiro:\n");
+			scanf("%d", &a1);
+			printf("Informe o segundo numero inteiro:\n");
+			scanf("%d", &b1);
+			result2 = mmc(a1,b1);
+			printf("O resultado do calculo e: %d\n", result2);
+			break;
+			case 10:
+                printf("Informe os coeficientes a, b e c:\n");
+                scanf("%lf%lf%lf", &a, &b, &c);
+                equacao(a, b, c);
+				//printf("O resultado do calculo e: %lf\n",result);
+                break;
 			
-			
+
 		}
 		
 	}while(opcao != 11);
@@ -129,7 +157,6 @@ int main() {
 	return 0;
 		
 }
-
 double Potenciacao(double base, int exp)
 {
 	double potencia = 1.0;
@@ -142,7 +169,6 @@ double Potenciacao(double base, int exp)
 	
 	return(potencia);
 }
-
 double soma (double a, double b)
 {
 	
@@ -213,4 +239,44 @@ int fatorial2 (int a)
 			}
 		}
 	return(fatorial2);
-}		
+}
+int mdc (int a,int b)
+{
+    while (b != 0) {
+        int temp = b; // Armazena o valor de b
+        b = a % b;    // b se torna o resto da divisão de a por b
+        a = temp;     // a se torna o antigo valor de b
+    }
+	int mdc = a;
+    return (mdc); // Quando b é 0, a é o MDC	
+}	
+int mmc(int a, int b)
+{
+    int resultado_mdc = mdc(a, b);
+    return (a * b) / resultado_mdc;
+}
+void equacao(double a, double b, double c) 
+{
+    if (a == 0) {
+        printf("Nao e uma equacao de segundo grau (a = 0).\n");
+        
+    }
+
+    double delta = b * b - 4 * a * c;
+
+    if (delta < 0) {
+        printf("Nao existem raizes reais (delta < 0).\n");
+        
+    }
+
+    double raizDelta = raiz(delta);
+
+    if (delta == 0) {
+        double r = -b / (2 * a);
+        printf("Existe uma raiz real: r = %.5lf\n", r);
+    } else {
+        double r1 = (-b + raizDelta) / (2 * a);
+        double r2 = (-b - raizDelta) / (2 * a);
+        printf("As raizes reais sao: r1 = %.5lf e r2 = %.5lf\n", r1, r2);
+    }
+}
