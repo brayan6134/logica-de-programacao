@@ -13,19 +13,17 @@ int mmc(int a,int b);
 void equacao(double a, double b, double c); 
 int main() {
 	
-	int opcao = 0;
 	double result = 0.0;
 	double a = 0.0;
 	double b = 0.0;
 	double c = 0.0;
+	int opcao = 0;
 	int a1 = 0;
 	int b1 = 0;
-	int fat = 0;
 	int result2 = 0;
-	int exp = 0;
 
 	printf("Bem vindo a minha calculadora 1.0\n");
-	printf("escolha uma opcao\n");
+	printf("escolha uma opcao abaixo\n");
 	
 	do{
 		printf("|----------------------------|\n");
@@ -93,8 +91,8 @@ int main() {
 				printf("Informe a base:\n");
 				scanf("%lf",&a);
 				printf("Informe o expoente\n");
-				scanf("%d",&exp);
-				result = Potenciacao(a,exp);
+				scanf("%d",&b1);
+				result = Potenciacao(a,b1);
 				printf("O resultado do calculo e: %.5lf\n",result);		
 			break;
 			
@@ -108,22 +106,34 @@ int main() {
 				else  
 				{
 					result = raiz(a);
-					printf("o resultado do calculo e: %.5lf\n",a,result);
+					printf("o resultado do calculo e: %.5lf\n",result);
 				}
 			break;
+			
 			case 6:
 			printf("informe o numero\n");
-			scanf("%d",&fat);
-			result2 = fatorial(fat);
+			scanf("%d",&a1);
+			if(a1==0){
+			printf("o fatorial de 0 e igual a 1 por convencao matematica\n");
+			}
+			else{
+			result2 = fatorial(a1);
 			printf("o resultado do calculo e: %d\n",result2);
-			
+			}
 			break;
+			
 			case 7:
 			printf("digite o numero para calcular\n");
-			scanf("%d",&fat);
-			result2 = fatorial2(fat);
+			scanf("%d",&a1);
+			if(a1==0){
+			printf("o fatorial duplo de 0 e igual a 1 por convencao matematica\n");
+			}
+			else{ 
+			result2 = fatorial2(a1);
 			printf("o resultado do calculo e: %d\n",result2);
+			}
 			break;
+			
 			case 8:
 			printf("Informe o primeiro numero inteiro:\n");
 			scanf("%d", &a1);
@@ -141,13 +151,17 @@ int main() {
 			result2 = mmc(a1,b1);
 			printf("O resultado do calculo e: %d\n", result2);
 			break;
+			
 			case 10:
                 printf("Informe os coeficientes a, b e c:\n");
                 scanf("%lf%lf%lf", &a, &b, &c);
                 equacao(a, b, c);
 				//printf("O resultado do calculo e: %lf\n",result);
                 break;
-			
+				
+			case 11:
+			printf("obrigado por usar minha calculadora 1.0");
+			break;
 
 		}
 		
@@ -157,7 +171,7 @@ int main() {
 	return 0;
 		
 }
-double Potenciacao(double base, int exp)
+double Potenciacao(double base, int exp) 
 {
 	double potencia = 1.0;
 
@@ -257,24 +271,19 @@ int mmc(int a, int b)
 }
 void equacao(double a, double b, double c) 
 {
-    if (a == 0) {
-        printf("Nao e uma equacao de segundo grau (a = 0).\n");
-        
-    }
-
     double delta = b * b - 4 * a * c;
-
-    if (delta < 0) {
-        printf("Nao existem raizes reais (delta < 0).\n");
-        
+	double raizDelta = raiz(delta);
+	 if (a == 0) {
+		printf("o primeiro coeficiente nao pode ser zero\n");
+	}
+    else if (delta < 0) {
+        printf("Nao existem raizes reais\n");   
     }
-
-    double raizDelta = raiz(delta);
-
-    if (delta == 0) {
+    else if (delta == 0) {
         double r = -b / (2 * a);
-        printf("Existe uma raiz real: r = %.5lf\n", r);
-    } else {
+        printf("Existe uma raiz real: %.5lf\n", r);
+    } 
+	else if (a != 0 && delta>0){
         double r1 = (-b + raizDelta) / (2 * a);
         double r2 = (-b - raizDelta) / (2 * a);
         printf("As raizes reais sao: r1 = %.5lf e r2 = %.5lf\n", r1, r2);
