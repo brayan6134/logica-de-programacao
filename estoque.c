@@ -5,10 +5,16 @@ struct variaveis{
 	double preco;
 	double total;
 	int opcao;
+	int codigo;	
 };
 int main(){
- FILE *pont_arq;
-	struct variaveis a1;
+	
+	FILE *pont_arq;
+	struct variaveis a1[1000];
+	int quantidap = 0;
+	int i = 0;
+	int codigo = 0;
+	
 	
 	do{
 	printf("bem vindo ao estoque\n");
@@ -16,7 +22,7 @@ int main(){
 	printf("|--------------------------------------------|\n");
 	printf("|        funcoes                       codigo|\n");
 	printf("|      adicionar produtos                 0  |\n");
-	printf("|      subtrair produtos                  1  |\n");
+	printf("|      excluir produtos                   1  |\n");
 	printf("|      buscar produto                     2  |\n");
 	printf("|      listar todos os produtos           3  |\n");
     printf("|      atualizar quantidade               4  |\n");
@@ -24,37 +30,99 @@ int main(){
 	printf("|      encerrar programa                  6  |\n");
 	printf("|--------------------------------------------|\n");
 	
-	scanf("%d",&a1.opcao);
+	scanf("%d",&a1[i].opcao);
 	
-	switch(a1.opcao){
+	switch(a1[i].opcao){
 			case 0: 
 				pont_arq = fopen("estoque.txt","a"); 
-		if(pont_arq == NULL){
-			printf("erro o arquivo nao existe\n");
-		}
-		else{
-			printf("o arquivo foi aberto com sucesso\n");
-			 for(int i=0;i<1;i++)
-	
-				 printf("escreva o nome do produto\n");
-				 scanf("%s",a1.produtos);
-				 printf("escreva o preco\n");
-				 scanf("%lf",&a1.preco);
-				 printf("escreva a quantidade\n");
-				 scanf("%d",&a1.quantidade);
-		 
-		 fscanf(pont_arq," %s:produto\n%.2lf:valor un\n%d:quantidade\n",a1.produtos,a1.preco,a1.quantidade);
-		 a1.total = a1.preco*a1.quantidade;
-		 fprintf(pont_arq," produto:%s\nvalor un:%.2lf\nvalor total:%.2lf\nquantidade:%d",a1.produtos,a1.preco,a1.total,a1.quantidade);
-		printf("produto adicionado com sucesso\n");
-		fclose(pont_arq);
-	 }
+				if(pont_arq == NULL)
+				{
+					printf("erro o arquivo nao existe\n");
+				}
+				else
+				{
+					printf("o arquivo foi aberto com sucesso\n");
+					printf("quantos produtos deseja adicionar\n");
+					scanf("%d",&quantidap);
+					for(int i = 0;i<quantidap;i++)
+					{
+						printf("escreva o nome do produto\n");
+						scanf("%s",a1[i].produtos);
+						printf("escreva o codigo do produto\n");
+						scanf("%d",&a1[i].codigo);
+						printf("escreva o preco\n");
+						scanf("%lf",&a1[i].preco);
+						printf("escreva a quantidade\n");
+						scanf("%d",&a1[i].quantidade);
+						a1[i].total = a1[i].preco*a1[i].quantidade;
+						fprintf(pont_arq,"%s\n%d\n%.2lf\n%.2lf\n%d\n",a1[i].produtos,a1[i].codigo,a1[i].preco,a1[i].total,a1[i].quantidade);
+						printf("produto adicionado com sucesso\n");
+					}
+				}
+						fclose(pont_arq);
+						
+				fclose(pont_arq);
+					
 			break;
 			
-			case 1:
+					case 1:
+			pont_arq = fopen("estoque.txt", "r"); 
+			if (pont_arq == NULL) 
+			{
+				printf("Erro! O arquivo nao existe.\n");
+			} else 
+			{
+				printf("O arquivo foi aberto com sucesso.\n");
+				printf("Insira o codigo do produto que deseja excluir: ");
+				scanf("%d", &codigo);
+
+				i = 0; 
+
 				
-			break;
-			
+				while (fscanf(pont_arq, "%s\n%d\n%lf\n%lf\n%d\n", a1[i].produtos,&a1[i].codigo,&a1[i].preco,&a1[i].total,&a1[i].quantidade) != EOF) 
+				{   
+					i++;
+				}
+
+				fclose(pont_arq); 
+
+				int encontrado = 0;
+
+				
+				pont_arq = fopen("estoque.txt", "w");
+				if (pont_arq == NULL) 
+				{
+					printf("Erro ao reabrir o arquivo para escrita.\n");
+				} 
+				else 
+				{
+					for (int j = 0; j < i; j++) 
+					{
+						if (a1[j].codigo != codigo) 
+						{
+							
+							fprintf(pont_arq, "%s\n%d\n%.2lf\n%.2lf\n%d\n",a1[j].produtos,a1[j].codigo,a1[j].preco,a1[j].total,a1[j].quantidade); 		
+						} 
+						else 
+						{
+							encontrado = 1;
+						}
+					}
+
+					fclose(pont_arq);
+
+					if (encontrado) 
+					{
+						printf("Produto excluido com sucesso\n");
+					} 
+					else 
+					{
+						printf("Produto com codigo %d nao encontrado.\n", codigo);
+					}
+				}
+			}
+    break;
+
 			case 2:
 			
 			break;
@@ -67,12 +135,19 @@ int main(){
 				 else
 				 {
 					 printf("o arquivo foi aberto com sucesso\n");
-					while(fscanf(pont_arq," %s\n%lf\n%lf\n%d\n",a1.produtos,&a1.preco,&a1.total,&a1.quantidade)!=EOF)
+					while(fscanf(pont_arq,"%s\n%d\n%lf\n%lf\n%d\n",a1[i].produtos,&a1[i].codigo,&a1[i].preco,&a1[i].total,&a1[i].quantidade)!=EOF)
 					{
-						printf(" produto:%s\nvalor un:%.2lf\nvalor total:%.2lf\nquantidade:%d\n",a1.produtos,a1.preco,a1.total,a1.quantidade);
+				printf("|-------------------|\n");
+					printf("|produto:%s    |\n",a1[i].produtos);
+				printf("|codigo:%d           |\n",a1[i].codigo);
+				printf("|valor un:%.2lf     |\n",a1[i].preco);
+				printf("|valor total:%.2lf  |\n",a1[i].total);
+				printf("|quantidade:%d       |\n",a1[i].quantidade);
+				printf("|-------------------|\n\n\n");		
+						i++;	
 					}
-					fclose(pont_arq);	
-				}
+				 }
+				fclose(pont_arq);	
 			break;
 			
 			case 4:	
@@ -85,10 +160,11 @@ int main(){
 			
 			case 6:
 			printf("fechando o estoque");
+		       
+					
 			break;
 	}
-	}while(a1.opcao <= 5);
+	}while(a1[i].opcao <= 5);
 	 
-	
-	return(0);
+	 return(0);
 }
