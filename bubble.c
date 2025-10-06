@@ -5,13 +5,13 @@ int main()
 	int temp = 0;
 	
 	
-	printf("digite");
+	printf("digite o tamanho\n");
 	scanf("%d",&quantidade);
-	int vetor[quantidade];
+	char vetor[quantidade];
 	
 	for (int a = 0; a < quantidade; a++)
 	{
-		printf("Informe o numero desejado: ");
+		printf("Informe os numero desejado: \n");
 		scanf("%d",&vetor[a]);
 		printf("\n");
 	}
@@ -34,7 +34,7 @@ int main()
 	
 	for (int a = 0; a < quantidade; a++)
 	{
-		printf("%d ",vetor[a]);
+		printf("%c ",vetor[a]);
 	}
 	
 	
